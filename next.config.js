@@ -3,8 +3,8 @@ const nextConfig = {
   reactStrictMode: false,
   env: {
     // frontend code expects a base API URL like /api (not the admin subpath)
-    URL: "http://127.0.0.1:8000/api/admin",
-    storageURL: "http://127.0.0.1:8000",
+    URL: "https://api.neelayurvedics.in/api/admin",
+    storageURL: "https://api.neelayurvedics.in",
   },
   redirects: async () => {
     return [
