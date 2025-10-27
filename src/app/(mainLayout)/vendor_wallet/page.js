@@ -17,7 +17,12 @@ import { Col, Row } from "reactstrap";
 const VendorWallet = () => {
   const { role, setRole } = useContext(AccountContext);
   useEffect(() => {
-    setRole(JSON.parse(localStorage.getItem("role"))?.name);
+    if (typeof window !== "undefined") {
+      const storedRole = localStorage.getItem("role");
+      if (storedRole) {
+        setRole(JSON.parse(storedRole)?.name);
+      }
+    }
   }, []);
 
   const { t } = useTranslation("common");

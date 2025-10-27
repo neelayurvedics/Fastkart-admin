@@ -1,5 +1,5 @@
-const adminURL = process.env.adminURL || "http://127.0.0.1:8000/admin/";
-const storageURL = process.env.storageURL || "http://127.0.0.1:8000/storage/";
+const adminURL = process.env.adminURL || "https://api.neelayurvedics.in/admin/";
+const storageURL = process.env.storageURL || "https://api.neelayurvedics.in/storage/";
 
 export function getThemeImagePath(imageName) {
     return `${adminURL}images/themes/${imageName}`;
@@ -21,8 +21,18 @@ export function getImageUrl(urlOrPath) {
 }
 
 export const imageConfig = {
-    domains: ['127.0.0.1', 'localhost', 'laravel.pixelstrap.net'],
+    domains: ['api.neelayurvedics.in', '127.0.0.1', 'localhost', 'laravel.pixelstrap.net'],
     remotePatterns: [
+        {
+            protocol: 'https',
+            hostname: 'api.neelayurvedics.in',
+            pathname: '/admin/images/**',
+        },
+        {
+            protocol: 'https',
+            hostname: 'api.neelayurvedics.in',
+            pathname: '/storage/**',
+        },
         {
             protocol: 'http',
             hostname: '127.0.0.1',

@@ -18,10 +18,16 @@ const VendorDetails = () => {
     const [role, setRole] = useState('')
     const { data, isLoading, refetch } = useQuery({ queryKey: [VendorTransactions, role], queryFn: () => request({ url: VendorTransactions },router), enabled: false, refetchOnWindowFocus: false, select: (data) => data.data });
     useEffect(() => {
-        if (JSON.parse(localStorage.getItem("role"))?.name == 'vendor') {
-            refetch()
+        if (typeof window !== "undefined") {
+            const storedRole = localStorage.getItem("role");
+            if (storedRole) {
+                const parsedRole = JSON.parse(storedRole)?.name;
+                if (parsedRole === 'vendor') {
+                    refetch();
+                }
+                setRole(parsedRole);
+            }
         }
-        setRole(JSON.parse(localStorage.getItem("role"))?.name)
     }, [])
     return (
         <>

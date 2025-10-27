@@ -19,10 +19,12 @@ const AllProductTable = ({ data, ...props }) => {
   const language = settingObj?.general?.default_language?.locale
   
   useEffect(() => {
-    const storedRole = localStorage.getItem("role");
-    if (storedRole) {
-      const parsedRole = JSON.parse(storedRole);
-      setRole(parsedRole.name);
+    if (typeof window !== "undefined") {
+      const storedRole = localStorage.getItem("role");
+      if (storedRole) {
+        const parsedRole = JSON.parse(storedRole);
+        setRole(parsedRole.name);
+      }
     }
   }, [])
   const headerObj = {

@@ -28,14 +28,17 @@ const usePermissionCheck = (permissionTypeArr, keyToSearch) => {
       return uniqueObjects;
     }
     
-    if (JSON.parse(localStorage.getItem("account"))?.permissions?.length > 0) {
-      const securePaths = removeDuplicateObjects(ConvertPermissionArr(JSON.parse(localStorage.getItem("account"))?.permissions));
-      setAnsData(permissionTypeArr.map((permissionType) => Boolean(securePaths?.find((permission) => moduleToSearch == permission.name)?.permissionsArr.find((permission) => permission.type == permissionType))));
-    } else {
-      refetch();
-      if (data) {
-        const securePaths = ConvertPermissionArr(data?.data?.permissions);
+    if (typeof window !== "undefined") {
+      const account = localStorage.getItem("account");
+      if (account && JSON.parse(account)?.permissions?.length > 0) {
+        const securePaths = removeDuplicateObjects(ConvertPermissionArr(JSON.parse(account)?.permissions));
         setAnsData(permissionTypeArr.map((permissionType) => Boolean(securePaths?.find((permission) => moduleToSearch == permission.name)?.permissionsArr.find((permission) => permission.type == permissionType))));
+      } else {
+        refetch();
+        if (data) {
+          const securePaths = ConvertPermissionArr(data?.data?.permissions);
+          setAnsData(permissionTypeArr.map((permissionType) => Boolean(securePaths?.find((permission) => moduleToSearch == permission.name)?.permissionsArr.find((permission) => permission.type == permissionType))));
+        }
       }
     }
   }, [isLoading]);

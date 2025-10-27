@@ -26,6 +26,10 @@ const nextConfig = {
         hostname: "laravel.pixelstrap.net",
       },
       {
+        protocol: "https",
+        hostname: "api.neelayurvedics.in",
+      },
+      {
         protocol: "http",
         hostname: "127.0.0.1",
       },

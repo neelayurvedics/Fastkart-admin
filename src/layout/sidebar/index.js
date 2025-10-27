@@ -13,6 +13,7 @@ const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState([]);
   const { role, setRole } = useContext(AccountContext);
   const { sidebarOpen, setSidebarOpen } = useContext(SettingContext);
+  const [modifiedSidebar, setModifiedSidebar] = useState([]);
 
   const [mounted, setMounted] = useState(true);
   useEffect(() => {
@@ -21,6 +22,7 @@ const Sidebar = () => {
     }, 700);
     return () => clearTimeout(timer);
   }, []);
+  
   useEffect(() => {
     let storedRole;
     const ISSERVER = typeof window === "undefined";
@@ -36,7 +38,11 @@ const Sidebar = () => {
     }
   }, []);
 
-  const modifiedSidebar = getPermissionArray(MENUITEMS);
+  useEffect(() => {
+    // Update sidebar when role changes
+    const filteredMenu = getPermissionArray(MENUITEMS);
+    setModifiedSidebar(filteredMenu);
+  }, [role]);
 
   return (
     <div className={`sidebar-wrapper ${sidebarOpen ? "close_icon" : ""}`}>

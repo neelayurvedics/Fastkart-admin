@@ -7,8 +7,16 @@ if (!ISSERVER) storedRole = JSON.parse(localStorage.getItem("role"));
 const paymentPermission = storedRole?.name == "vendor" ? "PaymentDetails" : "";
 const ignoreList = ["dashboard", paymentPermission];
 
+// Check if user is admin - admins should see all menus
+const isAdmin = storedRole?.name === "admin";
+
 // Modify the the sidebar as per permissions
 export const getPermissionArray = (sidebarItems) => {
+  // If admin, return all menu items without filtering
+  if (isAdmin) {
+    return sidebarItems;
+  }
+
   return sidebarItems.reduce((filteredItems, item) => {
     const clonedItem = { ...item };
     if (ignoreList.includes(item.title)) {
