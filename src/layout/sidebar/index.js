@@ -1,14 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import LogoWrapper from "@/components/commonComponent/logoWrapper";
 import MENUITEMS from "./MenuData";
 import AccountContext from "@/helper/accountContext";
 import SettingContext from "@/helper/settingContext";
 import { getPermissionArray } from "@/components/common/getPermissionArray";
+import MenuList from "./MenuList";
 
-const MenuList = dynamic(() => import("./MenuList"), {
-  ssr: false,
-});
 const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState([]);
   const { role, setRole } = useContext(AccountContext);

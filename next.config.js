@@ -27,6 +27,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "admin.neelayurvedics.in",
+      },
+      {
+        protocol: "https",
         hostname: "api.neelayurvedics.in",
       },
       {
@@ -38,6 +42,14 @@ const nextConfig = {
         hostname: "localhost",
       },
     ],
+    // Custom loader to bypass Next.js optimization for external images
+    loader: 'custom',
+    loaderFile: './src/utils/imageLoader.js',
+    // Image configuration
+    minimumCacheTTL: 60,
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 };
 

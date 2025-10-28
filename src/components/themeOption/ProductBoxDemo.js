@@ -208,7 +208,7 @@ const ProductBoxDemo = () => {
       </div>
       <div className="product-box product-white-bg">
         <div className="product-image">
-          <a><Image height={208} width={95.28} className="img-fluid" src="/assets/images/product.png" alt="product" /></a>
+          <a><Image height={208} width={95.28} className="img-fluid" src="/assets/images/product.png" alt="product" unoptimized={true} /></a>
           <ProductOption />
         </div>
         <div className="product-detail position-relative">

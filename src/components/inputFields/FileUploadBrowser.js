@@ -42,7 +42,7 @@ const FileUploadBrowser = ({ values, setFieldValue, dispatch, ...props }) => {
                 [...fileDetail]?.map((elem, i) => (
                     <div key={i}>
                         <div className="img-box">
-                            {elem?.type == 'image/png' ? <Image src={elem instanceof File ? URL.createObjectURL(elem) : elem} className="img-fluid" width={100} height={100} alt="image" /> :
+                            {elem?.type == 'image/png' ? <Image src={elem instanceof File ? URL.createObjectURL(elem) : elem} className="img-fluid" width={100} height={100} alt="image" unoptimized={true} /> :
                                 <div><h4>{elem?.name}</h4><h4>{elem?.type}</h4></div>}
                             {elem instanceof File && (
                                 <div className="remove-img">
@@ -59,7 +59,7 @@ const FileUploadBrowser = ({ values, setFieldValue, dispatch, ...props }) => {
                 ))
             ) : (
                 <li>
-                    <Image src={fileDetail instanceof File ? URL.createObjectURL(fileDetail) : fileDetail} className="img-fluid" width={100} height={100} alt="image" />
+                    <Image src={fileDetail instanceof File ? URL.createObjectURL(fileDetail) : fileDetail} className="img-fluid" width={100} height={100} alt="image" unoptimized={true} />
                     {fileDetail instanceof File && (
                         <p>
                             <RiCloseLine

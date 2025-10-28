@@ -63,7 +63,7 @@ const ProductLayout = ({ values, setFieldValue }) => {
                   }
                   onChange={() => handleClick(elem)}
                 />
-                <Label htmlFor={elem.value}>
+                                <Label htmlFor={elem.value}>
                   <div>
                     <Image
                       src={elem.img}
@@ -71,6 +71,7 @@ const ProductLayout = ({ values, setFieldValue }) => {
                       alt=""
                       height={100}
                       width={165}
+                      unoptimized={true}
                     />
                   </div>
                   <h4 className="mt-2">{t(elem.title)}</h4>

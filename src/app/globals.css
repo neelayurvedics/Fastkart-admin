@@ -5,3 +5,8 @@
 html {
     scroll-behavior: smooth;
 }
+
+/* Disable smooth scrolling during route transitions */
+html[data-scroll-behavior="smooth"] {
+    scroll-behavior: smooth;
+}

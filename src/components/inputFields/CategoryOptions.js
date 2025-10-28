@@ -25,7 +25,7 @@ const CategoryOptions = ({ data, showList, setShowList, setFieldValue, setPath, 
     <>
       {showList?.map((item, i) => (
         <li key={i}>
-          {item?.image && <Image src={item.image} className="img-fluid category-image" alt={item?.name || "category-image"} height={80} width={80}
+          {item?.image && <Image src={item.image} className="img-fluid category-image" alt={item?.name || "category-image"} height={80} width={80} unoptimized={true}
           />}
           {item?.name || item?.title}
           <a className={`select-btn ${Array.isArray(values[name]) ? values[name]?.includes(item[getValuesKey]) ? "selected" : values[name]?.some( data => data?.id == item[getValuesKey]) ?"selected wow":""

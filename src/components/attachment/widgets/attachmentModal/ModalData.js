@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Input, Label } from "reactstrap";
 import AttachmentDeleteDropdown from "../AttachmentDeteleDropdown";
+import { getStorageImage } from "@/utils/getImageUrl";
 
 const ModalData = ({
   state,
@@ -51,9 +52,22 @@ const ModalData = ({
       dispatch({ type: "SELECTEDIMAGE", payload: [item] });
     }
   };
-  const getMimeTypeImage = (result) =>
-    mimeImageMapping[result?.mime_type] ??
-    process.env.storageURL + result?.asset_url;
+  
+  const getMimeTypeImage = (result) => {
+    // For non-image files, use MIME type mapping
+    if (mimeImageMapping[result?.mime_type]) {
+      return mimeImageMapping[result?.mime_type];
+    }
+    // For images or unknown types, use the actual URL
+    const url = result?.original_url || result?.asset_url;
+    if (!url) return null;
+    // If it's already a full URL, return as-is
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+    // If it's a relative path, use getStorageImage
+    return getStorageImage(url);
+  };
 
   return (
     <>
@@ -79,6 +93,7 @@ const ModalData = ({
                     alt="ratio image"
                     height={100}
                     width={100}
+                    unoptimized={true}
                   />
                 </div>
                 {!redirectToTabs && <AttachmentDeleteDropdown id={elem?.id} />}

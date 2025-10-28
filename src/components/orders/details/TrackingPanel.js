@@ -53,7 +53,7 @@ const TrackingPanel = ({ orderStatusData, orderStatus ,order }) => {
                 <li className="active cancelled-box">
                     <div className="panel-content">
                         <div className="icon">
-                            {<Image src={`/assets/images/tracking/cancelled.svg`} alt="image" height={40} width={40} />}
+                            {<Image src={`/assets/images/tracking/cancelled.svg`} alt="image" height={40} width={40} unoptimized={true} />}
                         </div>
                         <div>
                             <div className="status">

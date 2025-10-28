@@ -8,7 +8,7 @@ const Logo = () => {
   
   return (
     <Link href="/dashboard">
-      {state?.setLightLogo?.original_url ? <Image className="for-white" src={`${state?.setLightLogo?.original_url}`} alt="Light Logo" width={100} height={35} priority /> : <h2 className="text-white">{settingObj?.general?.site_name || 'Logo Here'}</h2>}
+      {state?.setLightLogo?.original_url ? <Image className="for-white" src={`${state?.setLightLogo?.original_url}`} alt="Light Logo" width={100} height={35} priority unoptimized={true} /> : <h2 className="text-white">{settingObj?.general?.site_name || 'Logo Here'}</h2>}
     </Link>
   );
 };

@@ -23,7 +23,19 @@ import { useRouter } from "next/navigation";
 
 const AttachmentModal = (props) => {
     const { modal, setModal, setFieldValue, name, setSelectedImage, isattachment, multiple, values, showImage, redirectToTabs, noAPICall ,selectedImage ,paramsProps } = props
-    const [create] = usePermissionCheck(["create"], "attachment");    
+    const [create] = usePermissionCheck(["create"], "attachment");
+    
+    // Check if user is admin - admins should have upload access
+    const [isAdmin, setIsAdmin] = useState(false);
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const role = localStorage.getItem("role");
+            if (role && JSON.parse(role)?.name === "admin") {
+                setIsAdmin(true);
+            }
+        }
+    }, []);
+    
     const { t } = useTranslation( 'common');
     const [tabNav, setTabNav] = useState(1);
     const [search, setSearch] = useState("");
@@ -60,7 +72,7 @@ const AttachmentModal = (props) => {
                         { attachmentsData?.data?.length > 0 && <TableBottom current_page={attachmentsData?.current_page} total={attachmentsData?.total} per_page={attachmentsData?.per_page} setPage={setPage} />}
                     </div>}
                 </TabPane>}
-                {create && <TabPane className={tabNav == 2 ? "fade active show" : ""} id="select">
+                {(create || isAdmin) && <TabPane className={tabNav == 2 ? "fade active show" : ""} id="select">
                     {<div className="content-section drop-files-sec">
                         <div>
                             <RiUploadCloud2Line />

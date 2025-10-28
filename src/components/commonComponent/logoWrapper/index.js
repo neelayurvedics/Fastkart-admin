@@ -10,7 +10,7 @@ const LogoWrapper = ({ setSidebarOpen }) => {
   return (
     <div className="logo-wrapper logo-wrapper-center">
       <Logo />
-      <Image className="img-fluid logo-sm w-auto" src={state?.setTinyLogo?.original_url ? state?.setTinyLogo?.original_url : LogoImg} alt="Tiny Logo" width={100} height={100} />
+      <Image className="img-fluid logo-sm w-auto" src={state?.setTinyLogo?.original_url ? state?.setTinyLogo?.original_url : LogoImg} alt="Tiny Logo" width={100} height={100} unoptimized={true} />
       <ToggleButton setSidebarOpen={setSidebarOpen} />
     </div>
   );

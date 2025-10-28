@@ -152,7 +152,7 @@ const ReactstrapSelectInput = ({ field, form: { touched, errors, setFieldValue }
                   </li>
                 ) : (
                   <li onClick={() => onSelectValue(option)}>
-                    {option?.image && <Image src={option?.image} className="img-fluid category-image" alt={option?.name|| ""} height={50} width={50} />}
+                    {option?.image && <Image src={option?.image} className="img-fluid category-image" alt={option?.name|| ""} height={50} width={50} unoptimized={true} />}
                     <p className={`cursor ${(selectedItems?.[index]?.[getValuesKey] || selectedItems?.[getValuesKey]) == option[getValuesKey] ? "selected" : ""}`}>{t(option.name)}</p>
                   </li>
                 )}

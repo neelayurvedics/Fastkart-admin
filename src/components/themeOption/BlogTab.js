@@ -21,7 +21,7 @@ const BlogTab = ({ values, setFieldValue }) => {
                 <Input name='product' type="radio" id={elem.id} checked={values['options']?.['blog']?.['blog_style'] == elem.value ? true : false} onChange={() => handleClick("[options][blog][blog_style]", elem)} />
                 <Label htmlFor={elem.id}>
                   <div>
-                    <Image src={elem.img} className="img-fluid" alt="" width={165} height={100} />
+                    <Image src={elem.img} className="img-fluid" alt="" width={165} height={100} unoptimized={true} />
                   </div>
                   <h4 className="mt-2">{t(elem.title)}</h4>
                 </Label>
@@ -39,7 +39,7 @@ const BlogTab = ({ values, setFieldValue }) => {
                 <Input name='blog' type="radio" id={elem.id} checked={values['options']?.['blog']?.['blog_sidebar_type'] == elem.value ? true : false} onChange={() => handleClick("[options][blog][blog_sidebar_type]", elem)} />
                 <Label htmlFor={elem.id}>
                   <div>
-                    <Image src={elem.img} className="img-fluid" alt="" width={165} height={100} />
+                    <Image src={elem.img} className="img-fluid" alt="" width={165} height={100} unoptimized={true} />
                   </div>
                   <h4 className="mt-2">{t(elem.title)}</h4>
                 </Label>

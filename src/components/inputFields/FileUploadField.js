@@ -130,18 +130,18 @@ const FileUploadField = ({
                   result.hasOwnProperty('mime_type') ? (
                     <>
                       {result.mime_type && result.mime_type.startsWith('image') ? (
-                            <Image src={result.original_url} className="img-fluid" alt="ratio image" height={130} width={130} />
+                            <Image src={result.original_url} className="img-fluid" alt="ratio image" height={130} width={130} unoptimized={true} />
                         ) : (
-                            <Image src={getMimeTypeImage(result.mime_type)} alt="ratio image" className="img-fluid" height={130} width={130} />
+                            <Image src={getMimeTypeImage(result.mime_type)} alt="ratio image" className="img-fluid" height={130} width={130} unoptimized={true} />
                       )}
                     </>
                   ) : (
                     <>
                       {videoType.includes(result?.original_url?.substring(result.original_url?.lastIndexOf('.') + 1)) ? 
-                        <Image src={VideoImages} alt="ratio image" className="img-fluid" height={130} width={130} />
+                        <Image src={VideoImages} alt="ratio image" className="img-fluid" height={130} width={130} unoptimized={true} />
                       : 
                       (
-                        <Image src={process.env.storageURL+result.original_url} alt="ratio image" className="img-fluid" height={130} width={130} />
+                        <Image src={process.env.storageURL+result.original_url} alt="ratio image" className="img-fluid" height={130} width={130} unoptimized={true} />
                       )} 
                     </>
                   )}

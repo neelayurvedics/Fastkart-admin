@@ -26,7 +26,7 @@ const SellerTab = ({ values, setFieldValue, errors, touched }) => {
                                 <Input name={'store_layout'} type="radio" id={elem?.value} checked={values['options']?.['seller']?.['store_layout'] == elem.value ? true : false} onChange={()=> handleClick("[options][seller][store_layout]")} />
                                 <Label htmlFor={elem?.value}>
                                     <div>
-                                        <Image src={elem.img} className="img-fluid" alt={elem?.title || ""} width={165} height={100} />
+                                        <Image src={elem.img} className="img-fluid" alt={elem?.title || ""} width={165} height={100} unoptimized={true} />
                                     </div>
                                     <h4 className="mt-2">{t(elem.title)}</h4>
                                 </Label>
@@ -44,7 +44,7 @@ const SellerTab = ({ values, setFieldValue, errors, touched }) => {
                                 <Input name={'store_details'} type="radio" id={elem.value} defaultChecked={values['options']?.['seller']?.['store_details'] == elem.value ? true : false} />
                                 <Label htmlFor={elem.value}>
                                     <div>
-                                        <Image src={elem.img} className="img-fluid" alt={elem?.title || ""} width={165} height={100} />
+                                        <Image src={elem.img} className="img-fluid" alt={elem?.title || ""} width={165} height={100} unoptimized={true} />
                                     </div>
                                     <h4 className="mt-2">{t(elem.title)}</h4>
                                 </Label>

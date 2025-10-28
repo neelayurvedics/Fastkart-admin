@@ -27,7 +27,7 @@ const Header = ({ setMode,mode, setLtr, settingData }) => {
           </div>
           <ToggleButton setSidebarOpen={setSidebarOpen} />
           <a className="d-lg-none d-block mobile-logo">
-            <Image src={state?.setDarkLogo?.original_url || logoOne} height={21} width={120} alt="Dark Logo" />
+            <Image src={state?.setDarkLogo?.original_url || logoOne} height={21} width={120} alt="Dark Logo" unoptimized={true} />
           </a>
         </div>
         <SearchBar openSearchBar={openSearchBar} setOpenSearchBar={setOpenSearchBar} />

@@ -29,6 +29,14 @@ const usePermissionCheck = (permissionTypeArr, keyToSearch) => {
     }
     
     if (typeof window !== "undefined") {
+      // Check if user is admin - admins have all permissions
+      const role = localStorage.getItem("role");
+      if (role && JSON.parse(role)?.name === "admin") {
+        // Admin has all permissions - return true for all requested permission types
+        setAnsData(permissionTypeArr.map(() => true));
+        return;
+      }
+
       const account = localStorage.getItem("account");
       if (account && JSON.parse(account)?.permissions?.length > 0) {
         const securePaths = removeDuplicateObjects(ConvertPermissionArr(JSON.parse(account)?.permissions));

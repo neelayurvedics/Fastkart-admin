@@ -10,7 +10,7 @@ const RightSection7 = ({ values, active, setActive, productData, setSearch }) =>
     const { t } = useTranslation( 'common');
     return (
         <div className='shipping-accordion-custom'>
-            <div className="p-3 rule-dropdown d-flex justify-content-between" onClick={() => setActive(8)}>{values['content']?.['main_content']['section7_products']['title']}<RiArrowDownLine />
+            <div className="p-3 rule-dropdown d-flex justify-content-between" onClick={() => setActive(8)}>{values['content']?.['main_content']?.['section7_products']?.['title'] || t("products")}<RiArrowDownLine />
             </div>
             {active == 8 && (
                 <div className="rule-edit-form">

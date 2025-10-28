@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { RiAddLine, RiDeleteBin2Line, RiDeleteBinLine } from "react-icons/ri";
 import ShowModal from "../../../elements/alerts&Modals/Modal";
 import Btn from "../../../elements/buttons/Btn";
@@ -16,6 +16,18 @@ const AttachmentHead = ({ isattachment, state, dispatch, refetch }) => {
     
     const { t } = useTranslation( 'common');
     const [create, destroy] = usePermissionCheck(["create", "destroy"]);
+    
+    // Check if user is admin - admins should have upload access
+    const [isAdmin, setIsAdmin] = useState(false);
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const role = localStorage.getItem("role");
+            if (role && JSON.parse(role)?.name === "admin") {
+                setIsAdmin(true);
+            }
+        }
+    }, []);
+    
     const [modal, setModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false)
     const router = useRouter();
@@ -54,7 +66,7 @@ const AttachmentHead = ({ isattachment, state, dispatch, refetch }) => {
                         </ul>
                     </div>}
                 </div>
-                {create && <div className="right-options">
+                {(create || isAdmin) && <div className="right-options">
                     <ul>
                         <li>
                             <Btn className="btn btn-solid btn-theme" onClick={() => setModal(true)}><RiAddLine />{t("add_media")}</Btn>

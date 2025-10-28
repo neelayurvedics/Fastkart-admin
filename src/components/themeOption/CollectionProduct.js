@@ -23,7 +23,7 @@ const CollectionProduct = ({ values, setFieldValue, categoryData }) => {
               <Input name="[options][collection][collection_layout]" type="radio" id={elem.value} checked={values["options"]["collection"]?.["collection_layout"] == elem.value ? true : false} onChange={() => handleClick(elem)}/>
                 <Label htmlFor={elem.value}>
                   <div>
-                    <Image src={elem.img} className="img-fluid" alt="" width={165} height={100} />
+                    <Image src={elem.img} className="img-fluid" alt="" width={165} height={100} unoptimized={true} />
                   </div>
                   <h4 className="mt-2">{t(elem.title)}</h4>
                 </Label>

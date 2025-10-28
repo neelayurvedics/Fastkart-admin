@@ -54,7 +54,7 @@ const Theme = () => {
                     }}
                   >
                     <a href="#javascript">
-                      <Image src={`${LiveImagePath}${theme.image}`} className="img-fluid bg-img bg_size_content" alt={theme?.name || ""} height={250} width={300} />
+                      <Image src={`${LiveImagePath}${theme.image}`} className="img-fluid bg-img bg_size_content" alt={theme?.name || ""} height={250} width={300} unoptimized={true} />
                     </a>
                     <a href="#javascript" className="details-box">
                       {t("edit_theme")}

@@ -13,7 +13,7 @@ const ThemeImage = ({ src, alt = '', ...props }) => {
             src={src}
             alt={alt}
             loader={defaultLoader}
-            unoptimized={process.env.NODE_ENV === 'development'}
+            unoptimized={true}
             {...props}
         />
     );

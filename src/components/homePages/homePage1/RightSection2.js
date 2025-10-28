@@ -11,7 +11,7 @@ const RightSection2 = ({ values, setFieldValue, active, setActive }) => {
     const { t } = useTranslation( 'common');
     return (
         <div className='shipping-accordion-custom'>
-            <div className="p-3 rule-dropdown d-flex justify-content-between" onClick={() => setActive(2)}>{values['content']?.['main_content']['section2_categories_list']['title']}<RiArrowDownLine />
+            <div className="p-3 rule-dropdown d-flex justify-content-between" onClick={() => setActive(2)}>{values['content']?.['main_content']?.['section2_categories_list']?.['title'] || t("categories_list")}<RiArrowDownLine />
             </div>
             {active == 2 && (
                 <div className="rule-edit-form">

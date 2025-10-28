@@ -19,7 +19,7 @@ const RightSection9 = ({ values, setFieldValue, active, setActive }) => {
     if (isLoading) return <Loader />
     return (
         <div className='shipping-accordion-custom'>
-            <div className="p-3 rule-dropdown d-flex justify-content-between" onClick={() => setActive(10)}>{values['content']?.['main_content']['section9_featured_blogs']['title']}<RiArrowDownLine />
+            <div className="p-3 rule-dropdown d-flex justify-content-between" onClick={() => setActive(10)}>{values['content']?.['main_content']?.['section9_featured_blogs']?.['title'] || t("featured_blogs")}<RiArrowDownLine />
             </div>
             {active == 10 && (
                 <div className="rule-edit-form">

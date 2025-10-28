@@ -11,7 +11,7 @@ import PDFImages from "../../../../public/assets/images/pdf.png"
 import FolderImages from "../../../../public/assets/images/folder.png"
 import VideoImages from "../../../../public/assets/images/video.png"
 import AttachmentDeleteDropdown from "./AttachmentDeteleDropdown";
-
+import { getStorageImage } from "../../../utils/getImageUrl";
 
 
 const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
@@ -50,6 +50,7 @@ const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
     const getMimeTypeImage = (mimeType) => {
         return mimeImageMapping?.find((value) => value.mimeType === mimeType)?.imagePath;
     }
+    
     return (
         <>
             {attachmentsData?.length > 0 ? attachmentsData?.map((elem, i) => (
@@ -59,9 +60,9 @@ const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
                         <Label htmlFor={elem.id}>
                             <div className="ratio ratio-1x1">
                                 {elem.mime_type && elem.mime_type.startsWith('image') ? (
-                                    <Image src={elem.original_url} className="img-fluid" alt="ratio image" height={130} width={130} />
+                                    <Image src={elem.original_url?.startsWith('http') ? elem.original_url : getStorageImage(elem.original_url)} className="img-fluid" alt="ratio image" height={130} width={130} unoptimized={true} />
                                 ) : (
-                                    <Image src={getMimeTypeImage(elem.mime_type)} alt="attachment" className="img-fluid" height={130} width={130} />
+                                    <Image src={getMimeTypeImage(elem.mime_type)} alt="attachment" className="img-fluid" height={130} width={130} unoptimized={true} />
                                 )}
                             </div>
                             <AttachmentDeleteDropdown state={state} dispatch={dispatch} id={elem?.id} refetch={refetch} />

@@ -28,7 +28,7 @@ const ApplyCoupon = ({ data, setFieldValue, storeCoupon, setStoreCoupon, values 
                 <li className='coupon-sec'>
                     <div className='apply-sec mb-3'>
                         <div>
-                            <Image src={offerImg} className='img-fluid' height={20} width={20} alt='apply'/>
+                            <Image src={offerImg} className='img-fluid' height={20} width={20} alt='apply' unoptimized={true} />
                             <h4>{t("you_saved")} <span>{convertCurrency(data?.data?.total?.coupon_total_discount)}</span> {("withthiscode")} 🎉 <p>{t("coupon_applied")}</p></h4>
                         </div>
                         <a onClick={() => removeCoupon()}>{t("remove")}</a>
