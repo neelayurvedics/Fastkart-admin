@@ -16,6 +16,7 @@ import PDFImages from "../../../public/assets/images/pdf.png";
 import FolderImages from "../../../public/assets/images/folder.png";
 import VideoImages from "../../../public/assets/images/video.png";
 import { LiveImagePath } from "@/utils/constants";
+import { getStorageImage } from "@/utils/getImageUrl";
 
 const FileUploadField = ({
   values,
@@ -130,7 +131,7 @@ const FileUploadField = ({
                   result.hasOwnProperty('mime_type') ? (
                     <>
                       {result.mime_type && result.mime_type.startsWith('image') ? (
-                            <Image src={result.original_url} className="img-fluid" alt="ratio image" height={130} width={130} unoptimized={true} />
+                            <Image src={getStorageImage(result.original_url)} className="img-fluid" alt="ratio image" height={130} width={130} unoptimized={true} />
                         ) : (
                             <Image src={getMimeTypeImage(result.mime_type)} alt="ratio image" className="img-fluid" height={130} width={130} unoptimized={true} />
                       )}
@@ -141,7 +142,7 @@ const FileUploadField = ({
                         <Image src={VideoImages} alt="ratio image" className="img-fluid" height={130} width={130} unoptimized={true} />
                       : 
                       (
-                        <Image src={process.env.storageURL+result.original_url} alt="ratio image" className="img-fluid" height={130} width={130} unoptimized={true} />
+                        <Image src={getStorageImage(result.original_url)} alt="ratio image" className="img-fluid" height={130} width={130} unoptimized={true} />
                       )} 
                     </>
                   )}

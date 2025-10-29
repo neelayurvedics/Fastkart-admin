@@ -61,11 +61,8 @@ const ModalData = ({
     // For images or unknown types, use the actual URL
     const url = result?.original_url || result?.asset_url;
     if (!url) return null;
-    // If it's already a full URL, return as-is
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-      return url;
-    }
-    // If it's a relative path, use getStorageImage
+    
+    // Always use getStorageImage to handle both relative and absolute URLs
     return getStorageImage(url);
   };
 

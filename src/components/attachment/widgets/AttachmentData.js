@@ -60,7 +60,18 @@ const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
                         <Label htmlFor={elem.id}>
                             <div className="ratio ratio-1x1">
                                 {elem.mime_type && elem.mime_type.startsWith('image') ? (
-                                    <Image src={elem.original_url?.startsWith('http') ? elem.original_url : getStorageImage(elem.original_url)} className="img-fluid" alt="ratio image" height={130} width={130} unoptimized={true} />
+                                    <Image 
+                                        src={getStorageImage(elem.original_url)} 
+                                        className="img-fluid" 
+                                        alt="ratio image" 
+                                        height={130} 
+                                        width={130} 
+                                        unoptimized={true}
+                                        onError={(e) => {
+                                            console.log('Image load error for:', elem.original_url);
+                                            e.target.style.display = 'none';
+                                        }}
+                                    />
                                 ) : (
                                     <Image src={getMimeTypeImage(elem.mime_type)} alt="attachment" className="img-fluid" height={130} width={130} unoptimized={true} />
                                 )}
