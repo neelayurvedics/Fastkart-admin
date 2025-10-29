@@ -20,7 +20,12 @@ const AttachmentFilter = ({ setSearch, setSorting, search, sorting }) => {
     return (
         <div className="select-top-panel">
             <div>
-                <Input type="search" className="form-control" value={text ?? search ?? ""}
+                <Input 
+                    type="search" 
+                    id="attachment-search" 
+                    name="search"
+                    className="form-control" 
+                    value={text ?? search ?? ""}
                     placeholder={t("search_your_files")}
                     onChange={(e) => {
                         onChange(e.target.value);
@@ -28,7 +33,13 @@ const AttachmentFilter = ({ setSearch, setSorting, search, sorting }) => {
                     }}
                 />
             </div>
-            <select className="form-select" value={sorting} onChange={(e) => onSortingChange(e.target.value)}>
+            <select 
+                className="form-select" 
+                id="attachment-sort"
+                name="sort"
+                value={sorting} 
+                onChange={(e) => onSortingChange(e.target.value)}
+            >
                 <option value={""} >{t("sort_by_desc")}</option>
                 <option value={"newest"}>{t("sort_by_newest")}</option>
                 <option value={"oldest"}>{t("sort_by_oldest")}</option>

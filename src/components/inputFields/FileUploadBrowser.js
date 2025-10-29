@@ -90,7 +90,7 @@ const FileUploadBrowser = ({ values, setFieldValue, dispatch, ...props }) => {
         <>
             <a href="#javascript" className="font-blue browse-file">
                 {t("browse_files")}
-                <Input  {...props} onChange={(event) => onSelect(event)} onClick={handleClick}  />
+                <Input id={props.id || props.name} name={props.name} {...props} onChange={(event) => onSelect(event)} onClick={handleClick}  />
             </a>
             <div className={`overflow-section ${!values[props?.name]?.length > 0 ? 'd-none' : ''}`}>
                 <Row xl={5} xxl={6} lg={4} md={3} xs={2} className="image-selection-list g-sm-4 g-3">
