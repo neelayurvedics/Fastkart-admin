@@ -44,7 +44,7 @@ const TopDashSection = ({ role }) => {
                     <h2>{convertCurrency(data?.total_revenue || 0)}</h2>
                   </div>
                   <div className="widget-icon">
-                    <Image height={26} width={26} src={emptyWallet} className="img-fluid" alt="emptyWallet"/>
+                    <Image height={26} width={26} src={emptyWallet} className="img-fluid" alt="emptyWallet" unoptimized={true} />
                   </div>
                 </a>
               </Col>
@@ -57,7 +57,7 @@ const TopDashSection = ({ role }) => {
                         <h2>{data?.total_products}</h2>
                       </div>
                       <div className="widget-icon">
-                        <Image height={26} width={26} src={receipt2} className="img-fluid" alt="receipt2"/>
+                        <Image height={26} width={26} src={receipt2} className="img-fluid" alt="receipt2" unoptimized={true} />
                       </div>
                     </Link>
                   </Col>
@@ -77,6 +77,7 @@ const TopDashSection = ({ role }) => {
                           src={medalStar}
                           className="img-fluid"
                           alt="medal-star"
+                          unoptimized={true}
                         />
                       </div>
                     </Link>
@@ -97,6 +98,7 @@ const TopDashSection = ({ role }) => {
                           src={shopWhite}
                           className="img-fluid"
                           alt="shop-white"
+                          unoptimized={true}
                         />
                       </div>
                     </Link>
@@ -114,6 +116,7 @@ const TopDashSection = ({ role }) => {
                           src={people}
                           className="img-fluid"
                           alt="people"
+                          unoptimized={true}
                         />
                       </div>
                     </Link>

@@ -66,9 +66,10 @@ const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
                                         alt="ratio image"
                                         style={{ width: '130px', height: '130px', objectFit: 'cover' }}
                                         onError={(e) => {
-                                            console.error('Image load error for:', elem.original_url, 'Constructed URL:', getStorageImage(elem.original_url));
+                                            console.error('Image load failed:', getStorageImage(elem.original_url));
                                             e.target.style.display = 'none';
                                         }}
+                                        referrerPolicy="no-referrer"
                                     />
                                 ) : (
                                     <Image src={getMimeTypeImage(elem.mime_type)} alt="attachment" className="img-fluid" height={130} width={130} unoptimized={true} />

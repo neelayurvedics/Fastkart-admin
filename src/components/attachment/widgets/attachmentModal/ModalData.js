@@ -89,6 +89,7 @@ const ModalData = ({
                       src={getMimeTypeImage(elem)}
                       className="img-fluid"
                       alt="ratio image"
+                      referrerPolicy="no-referrer"
                       style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                     />
                   ) : (

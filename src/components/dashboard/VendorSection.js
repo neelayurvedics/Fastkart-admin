@@ -28,6 +28,7 @@ const VendorSection = ({ statistics, convertCurrency }) => {
               src={receipt2}
               className="img-fluid"
               alt="receipt2"
+              unoptimized={true}
             />
           </div>
         </a>
@@ -45,6 +46,7 @@ const VendorSection = ({ statistics, convertCurrency }) => {
               src={medalStar}
               className="img-fluid"
               alt="medal-star"
+              unoptimized={true}
             />
           </div>
         </Link>
@@ -62,6 +64,7 @@ const VendorSection = ({ statistics, convertCurrency }) => {
               src={receipt2}
               className="img-fluid"
               alt="receipt2"
+              unoptimized={true}
             />
           </div>
         </Link>
@@ -78,6 +81,9 @@ const VendorSection = ({ statistics, convertCurrency }) => {
               width={26}
               src={emptyWallet}
               className="img-fluid"
+              alt="emptyWallet"
+              unoptimized={true}
+            />
               alt="emptyWallet"
             />
           </div>
