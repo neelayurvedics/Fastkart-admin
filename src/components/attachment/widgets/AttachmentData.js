@@ -51,6 +51,13 @@ const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
         return mimeImageMapping?.find((value) => value.mimeType === mimeType)?.imagePath;
     }
     
+    // Debug: Log the first item to see the data structure
+    if (attachmentsData?.length > 0 && attachmentsData[0]) {
+        console.log('First attachment item:', attachmentsData[0]);
+        console.log('Original URL:', attachmentsData[0].original_url);
+        console.log('Constructed URL:', getStorageImage(attachmentsData[0].original_url));
+    }
+    
     return (
         <>
             {attachmentsData?.length > 0 ? attachmentsData?.map((elem, i) => (
@@ -68,8 +75,7 @@ const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
                                         width={130} 
                                         unoptimized={true}
                                         onError={(e) => {
-                                            console.log('Image load error for:', elem.original_url);
-                                            e.target.style.display = 'none';
+                                            console.error('Image load error for:', elem.original_url, 'Constructed URL:', getStorageImage(elem.original_url));
                                         }}
                                     />
                                 ) : (
