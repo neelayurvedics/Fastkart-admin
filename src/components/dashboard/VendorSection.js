@@ -84,8 +84,6 @@ const VendorSection = ({ statistics, convertCurrency }) => {
               alt="emptyWallet"
               unoptimized={true}
             />
-              alt="emptyWallet"
-            />
           </div>
         </Link>
       </Col>
