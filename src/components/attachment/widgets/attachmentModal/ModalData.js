@@ -84,14 +84,23 @@ const ModalData = ({
               />
               <Label htmlFor={elem.id}>
                 <div className="ratio ratio-1x1">
-                  <Image
-                    src={getMimeTypeImage(elem)}
-                    className="img-fluid"
-                    alt="ratio image"
-                    height={100}
-                    width={100}
-                    unoptimized={true}
-                  />
+                  {elem.mime_type && elem.mime_type.startsWith('image') ? (
+                    <img
+                      src={getMimeTypeImage(elem)}
+                      className="img-fluid"
+                      alt="ratio image"
+                      style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <Image
+                      src={getMimeTypeImage(elem)}
+                      className="img-fluid"
+                      alt="ratio image"
+                      height={100}
+                      width={100}
+                      unoptimized={true}
+                    />
+                  )}
                 </div>
                 {!redirectToTabs && <AttachmentDeleteDropdown id={elem?.id} />}
               </Label>
