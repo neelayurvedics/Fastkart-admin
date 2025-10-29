@@ -5,7 +5,7 @@ import ToggleButton from "../../components/commonComponent/logoWrapper/ToggleBut
 import RightNav from "./RightNav";
 import SettingContext from "@/helper/settingContext";
 import Image from "next/image";
-import logoOne from '../../../public/assets/images/logo/1.png'
+import WhiteLogo from '../../../public/assets/images/logo/full-white.png'
 import SearchBar from "./SearchBar";
 
 const Header = ({ setMode,mode, setLtr, settingData }) => {
@@ -27,7 +27,7 @@ const Header = ({ setMode,mode, setLtr, settingData }) => {
           </div>
           <ToggleButton setSidebarOpen={setSidebarOpen} />
           <a className="d-lg-none d-block mobile-logo">
-            <Image src={state?.setDarkLogo?.original_url || logoOne} height={21} width={120} alt="Dark Logo" unoptimized={true} />
+            <Image src={state?.setLightLogo?.original_url || WhiteLogo} height={21} width={120} alt="White Logo" unoptimized={true} />
           </a>
         </div>
         <SearchBar openSearchBar={openSearchBar} setOpenSearchBar={setOpenSearchBar} />
