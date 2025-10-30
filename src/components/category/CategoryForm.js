@@ -27,14 +27,19 @@ const CategoryForm = ({ mutate, updateId, loading, type, buttonName, language })
   const { state } = useContext(SettingContext)
   const router = useRouter();
   const { data: oldData, isLoading, refetch } = useQuery({ queryKey: ["category/" + updateId], queryFn: () => request({ url: `category/${updateId}` }, router), enabled: false });
-  const { data: zoneData} = useQuery({ queryKey: [ZoneApi],  queryFn: () => request({ url: ZoneApi}, router), refetchOnWindowFocus: false, select: (res) =>  res?.data?.data?.map((elem) => { return { name: elem.name, id: elem.id };}),});
+  const { data: zoneData} = useQuery({ 
+    queryKey: [ZoneApi],  
+    queryFn: () => request({ url: ZoneApi}, router), 
+    refetchOnWindowFocus: false, 
+    select: (res) => res?.data?.data?.map((elem) => ({ name: elem?.name || '', id: elem?.id })) || [],
+  });
   
   useEffect(() => {
     updateId && refetch();
   }, [updateId]);
 
   const updatedData = useMemo(() => {
-    return categoryState;
+    return categoryState || [];
   }, [categoryState]);
 
   if (updateId && isLoading) return <Loader />;
@@ -46,15 +51,15 @@ const CategoryForm = ({ mutate, updateId, loading, type, buttonName, language })
         name: updateId ? oldData?.data?.name || "" : "",
         slug: updateId ? oldData?.data?.slug || "" : "",
         description: updateId ? oldData?.data?.description || "" : "",
-        category_image_id: updateId ? oldData?.data?.category_image?.id : "",
+        category_image_id: updateId ? oldData?.data?.category_image?.id || "" : "",
         meta_title: updateId ? oldData?.data?.meta_title || "" : "",
         meta_description: updateId ? oldData?.data?.meta_description || "" : "",
-        category_meta_image_id: updateId ? oldData?.data?.category_meta_image?.id : "",
-        category_meta_image: updateId ? oldData?.data?.category_meta_image : "",
-        category_icon_id: updateId ? oldData?.data?.category_icon?.id : "",
-        category_image: updateId ? oldData?.data?.category_image : "",
-        category_icon: updateId ? oldData?.data?.category_icon : "",
-        commission_rate: updateId ? oldData?.data?.commission_rate : "",
+        category_meta_image_id: updateId ? oldData?.data?.category_meta_image?.id || "" : "",
+        category_meta_image: updateId ? oldData?.data?.category_meta_image || "" : "",
+        category_icon_id: updateId ? oldData?.data?.category_icon?.id || "" : "",
+        category_image: updateId ? oldData?.data?.category_image || "" : "",
+        category_icon: updateId ? oldData?.data?.category_icon || "" : "",
+        commission_rate: updateId ? oldData?.data?.commission_rate || "" : "",
         type: type,
         is_allow_all_zone: updateId ? Boolean(Number(oldData?.data?.is_allow_all_zone)) : true,
         status: updateId ? Boolean(Number(oldData?.data?.status)) : true,

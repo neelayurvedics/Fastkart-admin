@@ -8,23 +8,27 @@ const MultiSelectField = ({ setFieldValue, values, name, getValuesKey = "id", da
   const [selectedItems, setSelectedItems] = useState([]);
   const { ref, isComponentVisible, setIsComponentVisible } = useOutsideDropdown();
 
-  const SelectedItemFunction = (data) => {
-    for (let i = 0; i < data?.length; i++) {
-      if (data[i][getValuesKey] == values[name] || (Array.isArray(values[name]) && values[name].includes(data[i][getValuesKey])) || (Array.isArray(values[name]) && values[name].some(value => value?.id == data[i][getValuesKey]))) {
-        setSelectedItems((p) => (p ? [...p, data[i]] : [data[i]]));
+  const SelectedItemFunction = (dataArray) => {
+    if (!Array.isArray(dataArray)) return;
+    
+    for (let i = 0; i < dataArray.length; i++) {
+      if (dataArray[i][getValuesKey] == values[name] || (Array.isArray(values[name]) && values[name].includes(dataArray[i][getValuesKey])) || (Array.isArray(values[name]) && values[name].some(value => value?.id == dataArray[i][getValuesKey]))) {
+        setSelectedItems((p) => (p ? [...p, dataArray[i]] : [dataArray[i]]));
       }
-      if (data[i].subcategories?.length > 0) {
-        SelectedItemFunction(data[i].subcategories);
+      if (dataArray[i].subcategories?.length > 0) {
+        SelectedItemFunction(dataArray[i].subcategories);
       } 
       // childs
-      if (data[i].child?.length > 0) {
-        SelectedItemFunction(data[i].child);
+      if (dataArray[i].child?.length > 0) {
+        SelectedItemFunction(dataArray[i].child);
       }
     }
   };
   useEffect(() => {
     setSelectedItems();
-    SelectedItemFunction(data && data);
+    if (data) {
+      SelectedItemFunction(data);
+    }
   }, [values?.[name]]);
   return (
     <div className="category-select-box" ref={ref}>

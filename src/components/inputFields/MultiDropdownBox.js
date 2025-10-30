@@ -9,8 +9,12 @@ const MultiDropdownBox = ({  setIsComponentVisible, data, setFieldValue, values,
   const [path, setPath] = useState([]);
   const [showList, setShowList] = useState([]);
   useEffect(() => {
-    if (data) { setShowList(data) }
-    if (isComponentVisible == false) { setPath([]) }
+    if (data && Array.isArray(data)) { 
+      setShowList(data) 
+    }
+    if (isComponentVisible == false) { 
+      setPath([]) 
+    }
   }, [data, isComponentVisible])
   const hasValue = (item, term) => {
     let valueToReturn = false;
@@ -36,10 +40,12 @@ const MultiDropdownBox = ({  setIsComponentVisible, data, setFieldValue, values,
     const keyword = event.target.value;
     if (keyword !== "") {
       const updatedData = []
-      data?.forEach(item => { hasValue(item, keyword) && updatedData.push(item) })
+      if (Array.isArray(data)) {
+        data.forEach(item => { hasValue(item, keyword) && updatedData.push(item) })
+      }
       setShowList(updatedData)
     } else {
-      setShowList(data)
+      setShowList(data || [])
     }
   }
 
@@ -65,12 +71,25 @@ const MultiDropdownBox = ({  setIsComponentVisible, data, setFieldValue, values,
 
   return (
     <div className={`select-category-box ${isComponentVisible == name && data ? 'show' : ""}`}>
-      {data?.length > 5 && <Input placeholder="Search Here ..." className="search-input" onChange={handleChange} />}
+      {data?.length > 5 && (
+        <>
+          <label htmlFor={`${name}-search`} className="visually-hidden">{t("search")}</label>
+          <Input 
+            id={`${name}-search`}
+            name={`${name}-search`}
+            placeholder="Search Here ..." 
+            className="search-input" 
+            onChange={handleChange} 
+          />
+        </>
+      )}
       {showList.length > 0 ?
         <>
           <div className="select-all-checkbox mb-2">
-            <label>
+            <label htmlFor={`${name}-select-all`}>
               <input
+                id={`${name}-select-all`}
+                name={`${name}-select-all`}
                 type="checkbox"
                 checked={
                   Array.isArray(values?.[name]) &&
