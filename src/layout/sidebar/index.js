@@ -16,7 +16,7 @@ const Sidebar = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setMounted(false);
-    }, 700);
+    }, 300); // Reduced from 700ms to 300ms for faster loading
     return () => clearTimeout(timer);
   }, []);
   

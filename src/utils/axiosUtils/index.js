@@ -7,6 +7,7 @@ const client = axios.create({
   headers: {
     Accept: "application/json",
   },
+  timeout: 30000, // 30 second timeout
 });
 
 // Dynamically set headers in interceptors
@@ -32,6 +33,18 @@ client.interceptors.request.use((config) => {
 
   return config;
 });
+
+// Add response interceptor for better error handling
+client.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Handle network errors gracefully
+    if (!error.response) {
+      console.error('Network error:', error.message);
+    }
+    return Promise.reject(error);
+  }
+);
 
 const request = async ({ ...options }, router, headerOption) => {
   const onSuccess = (response) => response;

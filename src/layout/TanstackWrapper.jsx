@@ -14,7 +14,22 @@ import MenuProvider from "@/helper/menuContext/MenuProvider";
 import { CookiesProvider } from "react-cookie";
 
 const TanstackWrapper = ({ children }) => {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000, // 1 minute
+            cacheTime: 5 * 60 * 1000, // 5 minutes
+            refetchOnWindowFocus: false,
+            refetchOnMount: false,
+            refetchOnReconnect: false,
+            retry: 1,
+            retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+          },
+        },
+      })
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
