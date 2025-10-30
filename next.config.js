@@ -48,6 +48,8 @@ const nextConfig = {
     ];
   },
   images: {
+    // Disable image optimization to avoid loader errors with static imports
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -74,12 +76,7 @@ const nextConfig = {
         hostname: "localhost",
       },
     ],
-    // Custom loader to bypass Next.js optimization for external images
-    loader: 'custom',
-    loaderFile: './src/utils/imageLoader.js',
     // Image configuration for better performance
-    formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 31536000,
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     dangerouslyAllowSVG: true,

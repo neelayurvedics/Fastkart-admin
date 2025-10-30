@@ -27,7 +27,7 @@ const OrderStatus = ({ data, filterType, setFilterValue, setFilterType }) => {
             <Col xxl="4" sm="6" className="booking-status-card">
               <Link className="booking-widget-card card" href={{ pathname: `/order`, query: { status: "pending" } }}>
                 <div className="booking-widget-icon">
-                  <Image height={26} width={26} src={boxTime} className="img-fluid" alt="medal-star" />
+                  <Image height={26} width={26} src={boxTime} className="img-fluid" alt="medal-star" priority />
                 </div>
                 <div>
                   <h6>{t("pending")}</h6>
@@ -41,7 +41,7 @@ const OrderStatus = ({ data, filterType, setFilterValue, setFilterType }) => {
             <Col xxl="4" sm="6" className="booking-status-card">
               <Link className="booking-widget-card card" href={{ pathname: `/order`, query: { status: "processing" } }}>
                 <div className="booking-widget-icon">
-                  <Image height={26} width={26} src={Note} className="img-fluid" alt="note" />
+                  <Image height={26} width={26} src={Note} className="img-fluid" alt="note" priority />
                 </div>
                 <div>
                   <h6>{t("processing")}</h6>
@@ -55,7 +55,7 @@ const OrderStatus = ({ data, filterType, setFilterValue, setFilterType }) => {
             <Col xxl="4" sm="6" className="booking-status-card">
               <Link className="booking-widget-card card" href={{ pathname: `/order`, query: { status: "cancelled" } }}>
                 <div className="booking-widget-icon">
-                  <Image height={26} width={26} src={boxRemove} className="img-fluid" alt="Box1" />
+                  <Image height={26} width={26} src={boxRemove} className="img-fluid" alt="Box1" priority />
                 </div>
                 <div>
                   <h6>{t("cancelled")}</h6>
@@ -69,7 +69,7 @@ const OrderStatus = ({ data, filterType, setFilterValue, setFilterType }) => {
             <Col xxl="4" sm="6" className="booking-status-card">
               <Link className="booking-widget-card card" href={{ pathname: `/order`, query: { status: "shipped" } }}>
                 <div className="booking-widget-icon">
-                  <Image height={26} width={26} src={Box1} className="img-fluid" alt="Group" />
+                  <Image height={26} width={26} src={Box1} className="img-fluid" alt="Group" priority />
                 </div>
                 <div>
                   <h6>{t("shipped")}</h6>
@@ -83,7 +83,7 @@ const OrderStatus = ({ data, filterType, setFilterValue, setFilterType }) => {
             <Col xxl="4" sm="6" className="booking-status-card">
               <Link className="booking-widget-card card" href={{ pathname: `/order`, query: { status: "out_for_delivery" } }}>
                 <div className="booking-widget-icon">
-                  <Image height={26} width={26} src={Group} className="img-fluid" alt="shop" />
+                  <Image height={26} width={26} src={Group} className="img-fluid" alt="shop" priority />
                 </div>
                 <div>
                   <h6>{t("out_for_delivery")}</h6>
@@ -97,7 +97,7 @@ const OrderStatus = ({ data, filterType, setFilterValue, setFilterType }) => {
             <Col xxl="4" sm="6" className="booking-status-card">
               <Link className="booking-widget-card card" href={{ pathname: `/order`, query: { status: "delivered" } }}>
                 <div className="booking-widget-icon">
-                  <Image height={26} width={26} src={Shop} className="img-fluid" alt="boxRemove" />
+                  <Image height={26} width={26} src={Shop} className="img-fluid" alt="boxRemove" priority />
                 </div>
                 <div>
                   <h6>{t("delivered")}</h6>

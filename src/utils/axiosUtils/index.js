@@ -12,9 +12,9 @@ const client = axios.create({
 
 // Dynamically set headers in interceptors
 client.interceptors.request.use((config) => {
-  const { localLanguage, formLanguage } = JSON.parse(
-    window.localStorage.getItem("languageContext") || "{}"
-  );
+  const { localLanguage, formLanguage } = typeof window !== 'undefined'
+    ? JSON.parse(window.localStorage.getItem("languageContext") || "{}")
+    : {};
 
   // Determine the appropriate accept-language
   const isTranslateEndpoint = config.url?.includes(`/translation/admin`);
@@ -53,7 +53,9 @@ const request = async ({ ...options }, router, headerOption) => {
       Cookies.remove("uat");
       Cookies.remove("ue");
       Cookies.remove("account");
-      localStorage.clear();
+      if (typeof window !== 'undefined') {
+        localStorage.clear();
+      }
       router && router.push("/auth/login");
     }
     return error;

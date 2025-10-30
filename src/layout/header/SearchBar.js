@@ -57,7 +57,17 @@ const SearchBar = ({ openSearchBar, setOpenSearchBar }) => {
         </div>
         <div className="Typeahead Typeahead--twitterUsers">
           <div className="u-posRelative" ref={ref}>
-            <Input value={input} className="demo-input Typeahead-input form-control-plaintext w-100" type="text" placeholder={t("search") + " .."} name="search-bar" title="searchbar" onChange={handleChange} />
+            <label htmlFor="search-bar" className="visually-hidden">{t("search")}</label>
+            <Input 
+              id="search-bar" 
+              value={input} 
+              className="demo-input Typeahead-input form-control-plaintext w-100" 
+              type="text" 
+              placeholder={t("search") + " .."} 
+              name="search-bar" 
+              title="searchbar" 
+              onChange={handleChange} 
+            />
             <FiX className="close-search" onClick={() => setOpenSearchBar(false)} />
             <div className="spinner-border Typeahead-spinner" role="status">
               <span className="sr-only">{t("loading")}...</span>

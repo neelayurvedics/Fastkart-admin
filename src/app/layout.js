@@ -34,7 +34,7 @@ export default async function RootLayout({ children }) {
   const lng = await detectLanguage();
 
   return (
-    <html lang={lng} dir={dir(lng)}>
+    <html lang={lng} dir={dir(lng)} data-scroll-behavior="smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
