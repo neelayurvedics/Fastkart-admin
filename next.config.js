@@ -10,10 +10,6 @@ const nextConfig = {
     URL: process.env.URL || "https://api.neelayurvedics.in/api/admin",
     storageURL: process.env.storageURL || "https://api.neelayurvedics.in",
     adminURL: process.env.adminURL || "https://api.neelayurvedics.in/admin/",
-    // Make them available on client-side as well
-    NEXT_PUBLIC_STORAGE_URL: process.env.NEXT_PUBLIC_STORAGE_URL || process.env.storageURL || "https://api.neelayurvedics.in",
-    NEXT_PUBLIC_ADMIN_URL: process.env.NEXT_PUBLIC_ADMIN_URL || process.env.adminURL || "https://api.neelayurvedics.in/admin/",
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || process.env.URL || "https://api.neelayurvedics.in/api/admin",
   },
   
   // Optimize production builds
