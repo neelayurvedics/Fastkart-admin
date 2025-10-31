@@ -7,7 +7,7 @@ const client = axios.create({
   headers: {
     Accept: "application/json",
   },
-  timeout: 30000, // 30 second timeout
+  timeout: 60000, // Increased to 60 second timeout
 });
 
 // Dynamically set headers in interceptors
@@ -37,11 +37,24 @@ client.interceptors.request.use((config) => {
 // Add response interceptor for better error handling
 client.interceptors.response.use(
   (response) => response,
-  (error) => {
-    // Handle network errors gracefully
-    if (!error.response) {
-      console.error('Network error:', error.message);
+  async (error) => {
+    const originalRequest = error.config;
+    
+    // Handle network errors gracefully with retry logic
+    if (!error.response && !originalRequest._retry) {
+      originalRequest._retry = true;
+      console.warn('Network error, retrying...', error.message);
+      
+      // Retry once after a short delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return client(originalRequest);
     }
+    
+    // Handle timeout errors
+    if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+      console.error('Request timeout exceeded. Please check your network connection or try again later.');
+    }
+    
     return Promise.reject(error);
   }
 );

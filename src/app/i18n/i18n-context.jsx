@@ -8,14 +8,31 @@ import { I18nextProvider as Provider, initReactI18next } from "react-i18next";
 import { getOptions } from "./settings";
 import request from "@/utils/axiosUtils";
 
+// Cache for translations to avoid repeated API calls
+const translationCache = {};
+
 const loadResources = async (language, namespace) => {
+  // Check cache first
+  const cacheKey = `${language}_${namespace}`;
+  if (translationCache[cacheKey]) {
+    return translationCache[cacheKey];
+  }
 
   try {
     const response = await request({url:`${process.env.URL}/translation/admin`}, false);
-    return response.data;
+    
+    // Cache successful response
+    if (response?.data) {
+      translationCache[cacheKey] = response.data;
+      return response.data;
+    }
+    
+    // Return empty object if no data
+    return {};
   } catch (error) {
     console.error("Error loading translations:", error);
-    return {};
+    // Return cached fallback or empty object
+    return translationCache[cacheKey] || {};
   }
 };
 
@@ -37,15 +54,27 @@ i18next
 
 export function I18nProvider({ children, language }) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+  
   useEffect(() => {
     const loadTranslations = async () => {
       try {
+        // Set a timeout to prevent infinite loading
+        const timeoutId = setTimeout(() => {
+          console.warn('Translation loading timeout, proceeding with fallback');
+          setIsLoaded(true);
+          setLoadError(true);
+        }, 10000); // 10 second timeout for loading screen
+        
         // Fetch translations explicitly to ensure success before rendering children
         await loadResources(language, "admin");
+        clearTimeout(timeoutId);
         setIsLoaded(true);
+        setLoadError(false);
       } catch (error) {
-        console.error("Failed to load translations");
-        setIsLoaded(false);
+        console.error("Failed to load translations, using fallback");
+        setIsLoaded(true); // Still proceed to show the app
+        setLoadError(true);
       }
     };
 

@@ -15,6 +15,8 @@ import { getStorageImage } from "../../../utils/getImageUrl";
 
 
 const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
+    const [imageErrors, setImageErrors] = React.useState({});
+    
     let mimeImageMapping = [
         { mimeType: 'application/pdf', imagePath: PDFImages },
         { mimeType: 'application/msword', imagePath:WordImages },
@@ -51,6 +53,10 @@ const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
         return mimeImageMapping?.find((value) => value.mimeType === mimeType)?.imagePath;
     }
     
+    const handleImageError = (elemId) => {
+        setImageErrors(prev => ({ ...prev, [elemId]: true }));
+    };
+    
     return (
         <>
             {attachmentsData?.length > 0 ? attachmentsData?.map((elem, i) => (
@@ -60,20 +66,34 @@ const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
                         <Label htmlFor={elem.id}>
                             <div className="ratio ratio-1x1">
                                 {elem.mime_type && elem.mime_type.startsWith('image') ? (
-                                    <img 
-                                        src={getStorageImage(elem.original_url)} 
-                                        className="img-fluid" 
-                                        alt="ratio image"
-                                        style={{ width: '130px', height: '130px', objectFit: 'cover' }}
-                                        onError={(e) => {
-                                            // Avoid calling helpers inside the error handler to prevent
-                                            // any side-effects or additional runtime errors.
-                                            console.error('Image load failed for', elem.original_url);
-                                            // Hide the broken image so the layout remains clean.
-                                            e.currentTarget.style.display = 'none';
-                                        }}
-                                        referrerPolicy="no-referrer"
-                                    />
+                                    imageErrors[elem.id] ? (
+                                        <div style={{ 
+                                            width: '130px', 
+                                            height: '130px', 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            justifyContent: 'center',
+                                            backgroundColor: '#f0f0f0',
+                                            color: '#999',
+                                            fontSize: '12px'
+                                        }}>
+                                            Image unavailable
+                                        </div>
+                                    ) : (
+                                        <img 
+                                            src={getStorageImage(elem.original_url)} 
+                                            className="img-fluid" 
+                                            alt="ratio image"
+                                            style={{ width: '130px', height: '130px', objectFit: 'cover' }}
+                                            onError={(e) => {
+                                                // Avoid calling helpers inside the error handler to prevent
+                                                // any side-effects or additional runtime errors.
+                                                console.error('Image load failed for', elem.original_url);
+                                                handleImageError(elem.id);
+                                            }}
+                                            referrerPolicy="no-referrer"
+                                        />
+                                    )
                                 ) : (
                                     <Image src={getMimeTypeImage(elem.mime_type)} alt="attachment" className="img-fluid" height={130} width={130} unoptimized={true} />
                                 )}

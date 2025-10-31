@@ -1,9 +1,16 @@
+// Helper function to get environment variables with fallbacks
+const getEnvVar = (key, fallback) => {
+    // Try both server and client-side env vars
+    return process.env[key] || process.env[`NEXT_PUBLIC_${key.replace(/([A-Z])/g, '_$1').toUpperCase()}`] || fallback;
+};
+
 const getImageUrl = (path) => {
     if (!path) return '';
     if (path.startsWith('http://') || path.startsWith('https://')) {
         return path;
     }
-    return `${process.env.adminURL}images/themes/${path}`;
+    const adminURL = getEnvVar('adminURL', 'https://api.neelayurvedics.in/admin/');
+    return `${adminURL}images/themes/${path}`;
 };
 
 const getThemeImage = (imageName) => {
@@ -19,7 +26,7 @@ const getStorageImage = (path) => {
     }
     
     // Get base URL (with fallback)
-    const baseURL = 'https://api.neelayurvedics.in';
+    const baseURL = getEnvVar('storageURL', 'https://api.neelayurvedics.in');
     
     // Remove any leading slashes
     let cleanPath = path.startsWith('/') ? path.substring(1) : path;

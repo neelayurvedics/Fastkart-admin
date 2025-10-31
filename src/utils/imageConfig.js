@@ -1,5 +1,11 @@
-const adminURL = process.env.adminURL || "https://api.neelayurvedics.in/admin/";
-const storageURL = process.env.storageURL || "https://api.neelayurvedics.in/storage/";
+// Helper function to get environment variables with fallbacks
+const getEnvVar = (key, fallback) => {
+    // Try both server and client-side env vars
+    return process.env[key] || process.env[`NEXT_PUBLIC_${key.replace(/([A-Z])/g, '_$1').toUpperCase()}`] || fallback;
+};
+
+const adminURL = getEnvVar('adminURL', 'https://api.neelayurvedics.in/admin/');
+const storageURL = getEnvVar('storageURL', 'https://api.neelayurvedics.in/storage/');
 
 export function getThemeImagePath(imageName) {
     return `${adminURL}images/themes/${imageName}`;

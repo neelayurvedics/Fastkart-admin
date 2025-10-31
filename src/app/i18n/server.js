@@ -8,14 +8,31 @@ import request from "@/utils/axiosUtils"; // Import AxiosUtils
 import "server-only";
 import {fallbackLng, getOptions, languages } from "./settings";
 
+// Cache for translations to avoid repeated API calls
+const translationCache = {};
+
 // Helper function to load translations dynamically
 const loadResources = async (language, namespace) => {
+  // Check cache first
+  const cacheKey = `${language}_${namespace}`;
+  if (translationCache[cacheKey]) {
+    return translationCache[cacheKey];
+  }
+
   try {
     const response = await request({ url: `${process.env.URL}/translation/admin` }, false);
-    return response.data;
+    
+    // Cache successful response
+    if (response?.data) {
+      translationCache[cacheKey] = response.data;
+      return response.data;
+    }
+    
+    return null;
   } catch (error) {
     console.error("Error loading translations:", error);
-    return null;
+    // Return cached fallback or null
+    return translationCache[cacheKey] || null;
   }
 };
 

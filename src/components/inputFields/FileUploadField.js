@@ -131,7 +131,17 @@ const FileUploadField = ({
                   result.hasOwnProperty('mime_type') ? (
                     <>
                       {result.mime_type && result.mime_type.startsWith('image') ? (
-                            <img src={getStorageImage(result.original_url)} className="img-fluid" alt="ratio image" referrerPolicy="no-referrer" style={{ width: '130px', height: '130px', objectFit: 'cover' }} />
+                            <img 
+                              src={getStorageImage(result.original_url)} 
+                              className="img-fluid" 
+                              alt="ratio image" 
+                              referrerPolicy="no-referrer" 
+                              style={{ width: '130px', height: '130px', objectFit: 'cover' }}
+                              onError={(e) => {
+                                console.error('Image load failed for', result.original_url);
+                                e.currentTarget.style.display = 'none';
+                              }}
+                            />
                         ) : (
                             <Image src={getMimeTypeImage(result.mime_type)} alt="ratio image" className="img-fluid" height={130} width={130} unoptimized={true} />
                       )}
@@ -142,7 +152,17 @@ const FileUploadField = ({
                         <Image src={VideoImages} alt="ratio image" className="img-fluid" height={130} width={130} unoptimized={true} />
                       : 
                       (
-                        <img src={getStorageImage(result.original_url)} alt="ratio image" className="img-fluid" referrerPolicy="no-referrer" style={{ width: '130px', height: '130px', objectFit: 'cover' }} />
+                        <img 
+                          src={getStorageImage(result.original_url)} 
+                          alt="ratio image" 
+                          className="img-fluid" 
+                          referrerPolicy="no-referrer" 
+                          style={{ width: '130px', height: '130px', objectFit: 'cover' }}
+                          onError={(e) => {
+                            console.error('Image load failed for', result.original_url);
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
                       )} 
                     </>
                   )}
