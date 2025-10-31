@@ -2,7 +2,6 @@
 const nextConfig = {
   reactStrictMode: false,
   // Performance optimizations
-  swcMinify: true,
   compress: true,
   poweredByHeader: false,
   
