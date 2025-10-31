@@ -66,8 +66,11 @@ const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
                                         alt="ratio image"
                                         style={{ width: '130px', height: '130px', objectFit: 'cover' }}
                                         onError={(e) => {
-                                            console.error('Image load failed:', getStorageImage(elem.original_url));
-                                            e.target.style.display = 'none';
+                                            // Avoid calling helpers inside the error handler to prevent
+                                            // any side-effects or additional runtime errors.
+                                            console.error('Image load failed for', elem.original_url);
+                                            // Hide the broken image so the layout remains clean.
+                                            e.currentTarget.style.display = 'none';
                                         }}
                                         referrerPolicy="no-referrer"
                                     />
