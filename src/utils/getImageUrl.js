@@ -18,26 +18,33 @@ const getThemeImage = (imageName) => {
 };
 
 const getStorageImage = (path) => {
-    if (!path) return '';
+    if (!path) {
+        return '';
+    }
     
     // If already a full URL, return as-is
     if (path.startsWith('http://') || path.startsWith('https://')) {
         return path;
     }
     
-    // Get base URL (with fallback)
-    const baseURL = getEnvVar('storageURL', 'https://api.neelayurvedics.in');
+    // Get base URL (with fallback) and ensure no trailing slash
+    let baseURL = getEnvVar('storageURL', 'https://api.neelayurvedics.in');
+    baseURL = baseURL.endsWith('/') ? baseURL.slice(0, -1) : baseURL;
     
-    // Remove any leading slashes
-    let cleanPath = path.startsWith('/') ? path.substring(1) : path;
+    // Remove any leading slashes from the path
+    let cleanPath = path;
+    while (cleanPath.startsWith('/')) {
+        cleanPath = cleanPath.substring(1);
+    }
     
-    // If path already starts with "storage/", use it as-is
-    // Otherwise, prepend "storage/" to the path
+    // If path doesn't already start with "storage/", prepend it
+    // This handles cases where the API returns "19/image.webp" or "/storage/19/image.webp"
     if (!cleanPath.startsWith('storage/')) {
         cleanPath = `storage/${cleanPath}`;
     }
     
-    // Return the complete URL
+    // Return the complete URL with single slash
+    // This will correctly produce: https://api.neelayurvedics.in/storage/19/image.webp
     return `${baseURL}/${cleanPath}`;
 };
 

@@ -15,8 +15,6 @@ import { getStorageImage } from "../../../utils/getImageUrl";
 
 
 const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
-    const [imageErrors, setImageErrors] = React.useState({});
-    
     let mimeImageMapping = [
         { mimeType: 'application/pdf', imagePath: PDFImages },
         { mimeType: 'application/msword', imagePath:WordImages },
@@ -53,9 +51,26 @@ const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
         return mimeImageMapping?.find((value) => value.mimeType === mimeType)?.imagePath;
     }
     
-    const handleImageError = (elemId) => {
-        setImageErrors(prev => ({ ...prev, [elemId]: true }));
-    };
+    const getImageSource = (elem) => {
+        // asset_url is usually the full URL from the API
+        // original_url might be a relative path
+        // Try asset_url first as it's more likely to be the correct full URL
+        const url = elem?.asset_url || elem?.original_url || elem?.url;
+        const finalUrl = getStorageImage(url);
+        
+        // Debug logging
+        console.log('🖼️ Image data:', {
+            id: elem?.id,
+            name: elem?.name,
+            asset_url: elem?.asset_url,
+            original_url: elem?.original_url,
+            url: elem?.url,
+            selected: url,
+            finalUrl: finalUrl
+        });
+        
+        return finalUrl;
+    }
     
     return (
         <>
@@ -66,34 +81,65 @@ const AttachmentData = ({ state, dispatch, attachmentsData, refetch }) => {
                         <Label htmlFor={elem.id}>
                             <div className="ratio ratio-1x1">
                                 {elem.mime_type && elem.mime_type.startsWith('image') ? (
-                                    imageErrors[elem.id] ? (
-                                        <div style={{ 
-                                            width: '130px', 
-                                            height: '130px', 
-                                            display: 'flex', 
-                                            alignItems: 'center', 
-                                            justifyContent: 'center',
-                                            backgroundColor: '#f0f0f0',
-                                            color: '#999',
-                                            fontSize: '12px'
-                                        }}>
-                                            Image unavailable
-                                        </div>
-                                    ) : (
-                                        <img 
-                                            src={getStorageImage(elem.original_url)} 
-                                            className="img-fluid" 
-                                            alt="ratio image"
-                                            style={{ width: '130px', height: '130px', objectFit: 'cover' }}
-                                            onError={(e) => {
-                                                // Avoid calling helpers inside the error handler to prevent
-                                                // any side-effects or additional runtime errors.
-                                                console.error('Image load failed for', elem.original_url);
-                                                handleImageError(elem.id);
-                                            }}
-                                            referrerPolicy="no-referrer"
-                                        />
-                                    )
+                                    <img 
+                                        src={getImageSource(elem)} 
+                                        className="img-fluid" 
+                                        alt="ratio image"
+                                        style={{ width: '130px', height: '130px', objectFit: 'cover' }}
+                                        onError={(e) => {
+                                            const url = elem?.asset_url || elem?.original_url || elem?.url;
+                                            console.error('❌ Image failed to load!');
+                                            console.error('📁 Original path:', url);
+                                            console.error('🌐 Final URL:', e.target.src);
+                                            console.error('📊 Element data:', elem);
+                                            
+                                            // Check if it's a CORS issue or file doesn't exist
+                                            fetch(e.target.src, { method: 'HEAD' })
+                                                .then(response => {
+                                                    console.error('� Status:', response.status);
+                                                    if (response.status === 404) {
+                                                        console.error('❌ File not found (404) - Image may not exist on server');
+                                                    } else if (response.status === 403) {
+                                                        console.error('❌ Forbidden (403) - Permission issue');
+                                                    } else if (response.status === 200) {
+                                                        console.error('⚠️ File exists but failed to load - likely CORS issue');
+                                                    }
+                                                })
+                                                .catch(err => {
+                                                    console.error('❌ Network error:', err.message);
+                                                });
+                                            
+                                            // Set a placeholder - only run once per image
+                                            if (!e.target.dataset.errorHandled) {
+                                                e.target.dataset.errorHandled = 'true';
+                                                e.target.style.display = 'none';
+                                                
+                                                const parent = e.target.parentElement;
+                                                if (parent) {
+                                                    const placeholder = document.createElement('div');
+                                                    placeholder.style.cssText = 'width: 130px; height: 130px; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #fff3cd; color: #856404; font-size: 10px; border-radius: 4px; border: 1px solid #ffc107; padding: 8px; text-align: center; font-family: system-ui, -apple-system, sans-serif;';
+                                                    
+                                                    const icon = document.createElement('div');
+                                                    icon.textContent = '🔍';
+                                                    icon.style.cssText = 'font-size: 24px; margin-bottom: 4px;';
+                                                    
+                                                    const title = document.createElement('div');
+                                                    title.textContent = 'Check Console';
+                                                    title.style.cssText = 'font-weight: 600; margin-bottom: 2px;';
+                                                    
+                                                    const subtitle = document.createElement('div');
+                                                    subtitle.textContent = 'See error details (F12)';
+                                                    subtitle.style.cssText = 'font-size: 8px; opacity: 0.7;';
+                                                    
+                                                    placeholder.appendChild(icon);
+                                                    placeholder.appendChild(title);
+                                                    placeholder.appendChild(subtitle);
+                                                    parent.appendChild(placeholder);
+                                                }
+                                            }
+                                        }}
+                                        referrerPolicy="no-referrer"
+                                    />
                                 ) : (
                                     <Image src={getMimeTypeImage(elem.mime_type)} alt="attachment" className="img-fluid" height={130} width={130} unoptimized={true} />
                                 )}

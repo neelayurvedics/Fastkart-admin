@@ -7,9 +7,9 @@ const nextConfig = {
   
   env: {
     // Server-side environment variables
-    URL: process.env.URL || "https://api.neelayurvedics.in/api/admin",
-    storageURL: process.env.storageURL || "https://api.neelayurvedics.in",
-    adminURL: process.env.adminURL || "https://api.neelayurvedics.in/admin/",
+    URL:"https://api.neelayurvedics.in/api/admin",
+    storageURL:"https://api.neelayurvedics.in",
+    adminURL:"https://api.neelayurvedics.in/admin/",
   },
   
   // Optimize production builds
